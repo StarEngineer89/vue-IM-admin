@@ -44,7 +44,7 @@
     //查询
     function Query(){
         let loading = tips.loading('查询中')
-        axios.post('/admin/analyse/countLogins', param.value).then( res => {
+        axios.post('/admin/analyse/adminLogins', param.value).then( res => {
             if (res.status == 200) {
                 tableData.value = res.data.list;
                 //otal.value = res.data.count;
