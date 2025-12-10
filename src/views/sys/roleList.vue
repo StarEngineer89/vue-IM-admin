@@ -58,7 +58,7 @@
                     <div v-if="currentRole" class="permission-content">
                         <el-tree
                             ref="permissionTree"
-                            :key="'tree-' + currentRole.id + '-' + Date.now()"
+                            :key="'tree-' + currentRole.id"
                             :data="roleTree"
                             show-checkbox
                             node-key="id"
@@ -101,6 +101,7 @@
     const currentRole = ref(null)
     const roleTree = ref([])
     const checkedKeys = ref([])
+    const treeKey = ref(0)
 
     setTimeout(()=>{ Query() }, 1)
     
@@ -128,31 +129,54 @@
     //加载角色权限
     function loadRolePermissions(roleId){
         let loading = tips.loading('加载权限中')
-        axios.post('/admin/links/list', { role: roleId }).then( res => {
+        axios.post('/admin/roles/getPermissions', { role_id: roleId }).then( res => {
             if (res.status == 200) {
+                // Response structure: data.links is all links, data.permissions is active links array
+                const treeData = res.data.links || []
+                const permissionIds = res.data.permissions || []
+                
                 // Ensure data structure is correct - transform if needed
-                const normalizedData = normalizeTreeData(res.data);
+                const normalizedData = normalizeTreeData(treeData);
                 roleTree.value = normalizedData;
                 
-                // Extract checked keys from tree data (API may include checked status in nodes)
-                checkedKeys.value = extractCheckedKeys(normalizedData)
+                // Set checked keys from permissions array
+                if (permissionIds && permissionIds.length > 0) {
+                    // Ensure all IDs are numbers if needed
+                    checkedKeys.value = permissionIds.map(id => typeof id === 'string' ? parseInt(id) : id)
+                } else {
+                    checkedKeys.value = []
+                }
                 
-                // Force tree to re-render and expand all nodes
+                // Force tree to re-render and set checked keys
                 nextTick(() => {
                     if (permissionTree.value) {
-                        // Set checked keys if we found any
-                        if (checkedKeys.value.length > 0) {
+                        // First, expand all nodes
+                        expandAllNodes()
+                        
+                        // Set checked keys immediately
+                        if (checkedKeys.value && checkedKeys.value.length > 0) {
                             permissionTree.value.setCheckedKeys(checkedKeys.value, false)
                         }
                         
-                        // Force expand all nodes - use multiple attempts to ensure all are expanded
+                        // Use multiple timeouts to ensure tree is fully rendered and checkboxes are set
                         setTimeout(() => {
-                            expandAllNodes()
-                        }, 50)
+                            if (permissionTree.value) {
+                                expandAllNodes()
+                                if (checkedKeys.value && checkedKeys.value.length > 0) {
+                                    permissionTree.value.setCheckedKeys(checkedKeys.value, false)
+                                }
+                            }
+                        }, 100)
                         
                         setTimeout(() => {
-                            expandAllNodes()
-                        }, 200)
+                            if (permissionTree.value) {
+                                expandAllNodes()
+                                // Final check to ensure all checkboxes are properly set
+                                if (checkedKeys.value && checkedKeys.value.length > 0) {
+                                    permissionTree.value.setCheckedKeys(checkedKeys.value, false)
+                                }
+                            }
+                        }, 300)
                     }
                 })
             }
@@ -188,11 +212,15 @@
             nodes.forEach(node => {
                 // Check if node has checked property (API may return this)
                 if (node.checked === true || node.selected === true || node.is_checked === true || node.checked === 1) {
-                    keys.push(node.id)
+                    // Ensure ID is a number if needed
+                    const id = typeof node.id === 'string' ? parseInt(node.id) : node.id
+                    if (id) keys.push(id)
                 }
                 // Traverse children recursively to get all checked nodes
                 if (node.childs && node.childs.length > 0) {
                     traverse(node.childs)
+                } else if (node.children && node.children.length > 0) {
+                    traverse(node.children)
                 }
             })
         }
