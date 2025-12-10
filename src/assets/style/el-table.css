@@ -1,0 +1,28 @@
+.page-t{
+    padding: 20px;
+    background-color: #fff;
+}
+.page-t .el-table {
+    --el-table-text-color : #7e7e7e !important;
+}
+
+.page-param .el-form-item__label{
+    color: #666;
+}
+/* 表单 项 */
+.page-param .el-form-item {
+    margin-right: 10px;
+    margin-bottom: 10px; 
+}
+.page-param .el-input, 
+.page-param .el-select
+{
+    width: 190px;
+}
+.page-param .el-date-editor--daterange{
+    --el-date-editor-width : 230px; /* 时间段宽度 */
+}
+/* 分页 */
+.el-pagination{
+    margin-top: 10px;
+}

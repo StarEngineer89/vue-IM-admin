@@ -1,0 +1,57 @@
+/* ======================================================================================== Button 按钮 */
+.el-button{
+    --el-border-radius-base: 2px;
+}
+.el-message{
+    background-color:#fff;
+    font-weight: bold;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    /* --el-message-text-color: #67c23a85; */
+}
+
+/* ======================================================================================== Scrollbar 滚动条 */
+.el-scrollbar{
+    height: auto;
+}
+/* .el-scrollbar__thumb{} 滚动条颜色 */
+
+/* ======================================================================================== Tooltip 文字提示 */
+.is-light{
+    color: #cfd3dc;
+}
+
+/* ========================================================================================  Dropdown 下拉菜单 */ 
+.el-dropdown-menu__item{
+    font-size: 12px;
+}
+/* .el-dropdown{ color: #becad6; } */
+/* .el-dropdown-menu{ background: black;} */
+/* 提示框（这个是通用 Tooltip 和 Dropdown 都有这个类）*/
+.el-popper{
+    font-size: 12px !important;
+}
+
+/* 对话框 内容 内边距 */
+.el-dialog__body{
+    padding: 10px 20px 0 0;
+}
+/* 弹框 模糊背景色 */
+.el-overlay{
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px); 
+}
+
+/* .el-message__content{
+    font-size: 16px;
+    font-weight: bold;
+} */
+/* .el-message-box{
+    margin-top: -20vh;
+} */
+/* .el-message-box__content{
+    font-size: 16px;
+    font-weight: bold;
+} */
+
+/* .el-input__suffix-inner{}  后缀 */
+/* .el-input__clear{}  删除按钮 */

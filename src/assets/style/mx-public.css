@@ -1,0 +1,22 @@
+/* 系统头像 */
+.mx-avatar{
+    width:  calc(var(--mx-header-height) - 2px);
+    height: calc(var(--mx-header-height) - 2px);
+    border-radius: var(--mx-header-height);
+    background-color: rgba(0,0,0,0.5);
+}
+.mx-avatar .error-slot{
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+} 
+
+/* 页面(高度背景) */
+.mx-page{
+    padding: 16px;
+    height: calc(100% - 32px);
+    background-color: #fff;
+}

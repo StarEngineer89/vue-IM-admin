@@ -1,0 +1,1 @@
+window.apiurl = 'https://chatapi.ab25888.cc'

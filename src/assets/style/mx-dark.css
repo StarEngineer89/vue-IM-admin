@@ -1,0 +1,40 @@
+.dark:root {
+    --mx-sh:#121212; /*深黑*/
+    --mx-qh:#313131; /*浅黑*/
+}
+
+.dark #mx-header{
+    border-bottom: 1px solid var(--mx-qh) !important;
+}
+.dark #mx-header .el-switch .el-icon{
+    color: #fff !important;
+}
+.dark .el-tabs__header {
+    background-color: var(--mx-sh) !important;
+}
+.dark .el-tabs .is-active{
+    background-color: var(--mx-qh) !important;
+}
+
+.dark #mx-main {
+    background-color: var(--mx-qh) !important;
+}
+
+.dark #mx-menu{
+    --el-menu-bg-color: var(--mx-sh) !important;
+    --el-menu-hover-bg-color: var(--mx-qh) !important;;
+    /* --el-menu-text-color:#ffffffcc; */
+    /* --el-menu-active-color:#409eff; */
+}
+
+.dark .mx-table{
+    background-color: var(--mx-sh) !important;
+}
+.dark .mx-table .el-table {
+    --el-table-text-color : #999999 !important;
+}
+
+/* 弹框 模糊背景色 */
+.dark .el-overlay{
+    background-color: rgba(120, 120, 120, 0.2);
+}

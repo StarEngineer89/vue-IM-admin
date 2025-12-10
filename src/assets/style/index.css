@@ -1,0 +1,54 @@
+@import url('./el-public.css'); /* element-plus 公共 */
+
+@import url('./el-table.css');
+
+/*@import url('./el-tabs.css'); Tabs 标签页 */
+
+@import url('./mx-dark.css');
+
+@import url('./mx-public.css');
+
+
+* { margin:0; padding:0;}
+
+html, body, #app{  height: 100%; }
+
+html{
+    font-size: 14px;  /* 2rem = 28px */
+}
+
+/* root 除了优先级更高之外, 与 html 选择器相同 */
+:root {
+    user-select: none;
+    font-family: "Microsoft YaHei";
+    /* color: #132c35; */
+    --mx-header-height: 44px;
+    /* --mx-header-bj:#86bbb4; */
+}
+
+/* 解决浏览器输入框在记住密码后改变颜色问题 */
+input:-webkit-autofill {
+    -webkit-text-fill-color: #666 !important;
+    transition: background-color 5000s; 
+    /* 自动填充文字颜色 和 样式过度 */
+}
+
+/* 切换深色过度样式 */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none; /*去掉过度动画 js自定义*/
+    mix-blend-mode: normal; /*不进行任何混合*/
+    display: block;
+}
+html.dark::view-transition-old(root) {
+    z-index: 2;
+}
+html.dark::view-transition-new(root) {
+    z-index: 1;
+}
+html::view-transition-old(root) {
+    z-index: 1;
+}
+html::view-transition-new(root) {
+    z-index: 2;
+}
