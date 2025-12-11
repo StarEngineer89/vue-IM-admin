@@ -8,15 +8,30 @@
                 <el-form-item label="IP">
                     <el-input  v-model="param.ip" placeholder="请输入" clearable />
                 </el-form-item>
+                <el-form-item label="时间">
+                <el-date-picker
+                    v-model="param.timeList"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    format="YYYY-MM-DD"
+                    value-format="YYYY-MM-DD"
+                    style="width: 300px; margin-right: 10px;"
+                /></el-form-item>
+                <el-form-item label="Role">
+                    <el-select v-model="param.role_id" placeholder="请选择" clearable style="width: 120px;">
+                        <el-option label="1" value="1" />
+                        <el-option label="2" value="2" />
+                        <el-option label="3" value="3" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button v-blur type="primary" icon="Search" @click="Query">  查询</el-button>
+                    <el-button v-blur type="warning" icon="RefreshLeft" @click="funReset">  重置</el-button>
+                </el-form-item>
+                
             </el-form>
-        </el-scrollbar>
-
-        <el-scrollbar style="white-space: nowrap; margin-bottom: 10px;">
-            <el-button v-blur type="primary" icon="Search" @click="Query">  查询</el-button>
-            <el-button v-blur type="warning" icon="RefreshLeft" @click="funReset">  重置</el-button>
-            <!-- <el-button v-blur type="danger" icon="Delete"  @click="funDeletes">删除</el-button>
-            <el-button v-blur type="success" icon="Plus">添加</el-button>
-            <el-button v-blur type="info" icon="Download">导出</el-button> -->
         </el-scrollbar>
 
         <el-table :data="tableData.slice(0, 100)" @selection-change="SelectionChange" border max-height="100vh - 350px">
