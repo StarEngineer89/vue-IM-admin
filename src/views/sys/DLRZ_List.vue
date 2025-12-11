@@ -19,11 +19,14 @@
                     value-format="YYYY-MM-DD"
                     style="width: 300px; margin-right: 10px;"
                 /></el-form-item>
-                <el-form-item label="Role">
+                <el-form-item label="角色">
                     <el-select v-model="param.role_id" placeholder="请选择" clearable style="width: 120px;">
-                        <el-option label="1" value="1" />
-                        <el-option label="2" value="2" />
-                        <el-option label="3" value="3" />
+                        <el-option 
+                            v-for="role in rolesList" 
+                            :key="role.id" 
+                            :label="role.role" 
+                            :value="role.id" 
+                        />
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -78,8 +81,12 @@
     const param = ref({page:1, limit:20});
     const total = ref(0);
     const tableData = ref([])
+    const rolesList = ref([])
 
-    setTimeout(()=>{ Query() }, 1)
+    setTimeout(()=>{ 
+        Query()
+        loadRoles()
+    }, 1)
     
     //查询
     function Query(){
@@ -131,6 +138,15 @@
     function SizeChange (number){
         param.value.limit = number;
         Query()
+    }
+    //加载角色列表
+    function loadRoles(){
+        axios.post('/admin/roles/list', {}).then( res => {
+            if (res.status == 200) {
+                rolesList.value = res.data.roles || [];
+            }
+            else tips.error(res.msg)
+        });
     }
 
 </script>
