@@ -22,9 +22,9 @@
                     </el-form-item>
                     <el-form-item label="状态">
                         <el-select v-model="param.status" placeholder="全部" clearable style="width: 120px;">
-                            <el-option label="全部" value="" />
-                            <el-option label="正常" value="1" />
-                            <el-option label="禁用" value="0" />
+                            <el-option label="全部" :value="null" />
+                            <el-option label="正常" :value="1" />
+                            <el-option label="禁用" :value="0" />
                         </el-select>
                     </el-form-item>
                     <el-form-item>
@@ -176,7 +176,16 @@
     //查询
     function Query(){
         loading.value = true;
-        axios.post('/admin/admin/list', param.value).then( res => {
+        // Prepare query params with proper status value
+        const queryParams = { ...param.value };
+        // Convert status: empty string/null/undefined to null, ensure integer for 1 or 0
+        if(queryParams.status === '' || queryParams.status === null || queryParams.status === undefined){
+            queryParams.status = null;
+        } else if(typeof queryParams.status === 'string'){
+            queryParams.status = parseInt(queryParams.status);
+        }
+        // Ensure status is either null, 1 (int), or 0 (int)
+        axios.post('/admin/admin/list', queryParams).then( res => {
             if (res.status == 200) {
                 tableData.value = res.data.list || [];
                 total.value = res.data.count || 0;
