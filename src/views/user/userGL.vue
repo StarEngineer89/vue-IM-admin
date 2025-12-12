@@ -2,21 +2,20 @@
     <div class="page-t">
         <el-scrollbar class="page-param" max-height="126px" style="margin-bottom: 5px;">
             <el-form :inline="true">
-                <el-form-item label="账号">
-                    <el-input  v-model="param.account" placeholder="请输入" clearable />
+                <el-form-item label="UID">
+                    <el-input  v-model="param.uid" placeholder="请输入" clearable />
                 </el-form-item>
                 <el-form-item label="昵称">
                     <el-input  v-model="param.nickname" placeholder="请输入" clearable />
                 </el-form-item>
+                <el-form-item label="账号">
+                    <el-input  v-model="param.account" placeholder="请输入" clearable />
+                </el-form-item>
+                <el-form-item>
+                    <el-button v-blur type="primary" icon="Search" @click="Query">  查询</el-button>
+                    <el-button v-blur type="warning" icon="RefreshLeft" @click="funReset">  重置</el-button>
+                </el-form-item>
             </el-form>
-        </el-scrollbar>
-
-        <el-scrollbar style="white-space: nowrap; margin-bottom: 10px;">
-            <el-button v-blur type="primary" icon="Search" @click="Query">  查询</el-button>
-            <el-button v-blur type="warning" icon="RefreshLeft" @click="funReset">  重置</el-button>
-            <!-- <el-button v-blur type="danger" icon="Delete"  @click="funDeletes">删除</el-button>
-            <el-button v-blur type="success" icon="Plus">添加</el-button>
-            <el-button v-blur type="info" icon="Download">导出</el-button> -->
         </el-scrollbar>
 
         <el-table :data="tableData.slice(0, 100)" @selection-change="SelectionChange" border max-height="100vh - 350px">
