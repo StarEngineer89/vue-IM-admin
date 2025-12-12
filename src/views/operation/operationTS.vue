@@ -5,8 +5,8 @@
                 <el-form-item label="投诉标题">
                     <el-input  v-model="param.title" placeholder="请输入" clearable />
                 </el-form-item>
-                <el-form-item label="用户昵称">
-                    <el-input  v-model="param.username" placeholder="请输入" clearable />
+                <el-form-item label="投诉用户">
+                    <el-input  v-model="param.nickname" placeholder="请输入" clearable />
                 </el-form-item>
             </el-form>
         </el-scrollbar>
@@ -33,7 +33,7 @@
 
             <el-table-column fixed="right" label="操作" width="150">
             <template #default="scope">
-                <el-button link type="primary" icon="Edit" @click.prevent="edit.Open(scope.row.id)">处理</el-button>
+                <el-button link type="primary" icon="Edit" @click.prevent="edit.Open(scope.row)">处理</el-button>
                 <el-popconfirm title="确定删除?" @confirm="Delete(scope.row.id)">
                     <template #reference><el-button link type="danger" icon="Delete" >删除</el-button></template>
                 </el-popconfirm>

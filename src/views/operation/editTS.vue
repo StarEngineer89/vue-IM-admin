@@ -22,8 +22,19 @@
     const emit = defineEmits(['query']); //emit('query'); 
     defineExpose({ Open });
 
-    function Open(id){
-        param.value.cid = id;
+    function Open(data){
+        if(data){
+            param.value = {
+                cid: data.id || data.cid,
+                reply: data.reply || data.reply_content || ''
+            };
+        }
+        else{
+            param.value = {
+                cid: '',
+                reply: ''
+            };
+        }
         isshow.value = true;
     }
     function Submit(){
