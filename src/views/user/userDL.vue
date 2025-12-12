@@ -15,7 +15,7 @@
             </el-form>
         </el-scrollbar>
 
-        <el-table :data="tableData.slice(0, 100)" @selection-change="SelectionChange" border max-height="100vh - 350px">
+        <el-table :data="tableData" @selection-change="SelectionChange" border max-height="100vh - 350px">
             <el-table-column fixed type="selection" width="38" />
             <el-table-column prop="" label="序号" width="70" >
                 <template #default="scope"> {{ scope.$index + 1 }} </template>
@@ -28,7 +28,6 @@
             <el-table-column prop="login_ip" label="IP" show-overflow-tooltip />
             <el-table-column prop="device" label="设备" show-overflow-tooltip />
             <el-table-column prop="login_time" label="登入时间" show-overflow-tooltip />
-、
             <!-- <el-table-column fixed="right" label="操作" width="150">
                 <template #default="scope">
                     <el-button link type="primary" icon="Edit" @click.prevent="funEdit(scope.$index, scope.row)">  编辑</el-button>
@@ -44,6 +43,7 @@
                 :total="total"
                 :page-sizes="[10, 20, 50, 100]"
                 :pager-count="11"
+                :hide-on-single-page="false"
                 layout="total, sizes, prev, pager, next, jumper"
                 @current-change="CurrentChange"
                 @size-change="SizeChange"
@@ -71,7 +71,7 @@
         axios.post('/admin/history/logins', param.value).then( res => {
             if (res.status == 200) {
                 tableData.value = res.data.list;
-                total.value = res.data.count;
+                total.value = res.data.count || res.data.total || (res.data.list?.length ?? 0);
             }
             else tips.error(res.msg)
         }).finally(()=>{ loading.close(); });

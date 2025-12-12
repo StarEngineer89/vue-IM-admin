@@ -117,19 +117,20 @@
             </el-table-column>
         </el-table>
 
-        <!-- <el-scrollbar style="white-space: nowrap;">
+        <el-scrollbar style="white-space: nowrap;">
             <el-pagination
                 :current-page="param.page"
                 :page-size="param.limit"
                 :total="total"
                 :page-sizes="[10, 20, 50, 100]"
                 :pager-count="11"
+                :hide-on-single-page="false"
                 layout="total, sizes, prev, pager, next, jumper"
                 @current-change="CurrentChange"
                 @size-change="SizeChange"
                 background
             />
-        </el-scrollbar> -->
+        </el-scrollbar>
     </div>
     <Edit1 ref="edit" @query="Query"></Edit1>
 </template>
@@ -138,7 +139,7 @@
     import Edit1 from './menuEdit.vue'
     const edit = ref(null)
     const { proxy: { axios, tips } } = getCurrentInstance();
-    const param = ref({});
+    const param = ref({ page: 1, limit: 20 });
     const total = ref(0);
     const menuList1 = ref([])
     provide('menuList1', menuList1);
@@ -151,9 +152,11 @@
         let loading = tips.loading('查询中')
         axios.post('admin/links/list', param.value).then( res => {
             if (res.status == 200) {
+                const list = Array.isArray(res.data?.list) ? res.data.list : (Array.isArray(res.data) ? res.data : [])
+                total.value = res.data?.count || res.data?.total || list.length || 0
                 // Process data to ensure tree structure
-                tableData.value = processTreeData(res.data);
-                menuList1.value = res.data.filter(item => item.level == 1)
+                tableData.value = processTreeData(list);
+                menuList1.value = list.filter(item => item.level == 1)
             }
             else tips.error(res.msg)
         }).finally(()=>{ loading.close(); });
@@ -216,7 +219,7 @@
     
     //重置
     function Reset(){
-        param.value = {}
+        param.value = { page: 1, limit: 20 }
         Query()
     }
     
