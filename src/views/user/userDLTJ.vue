@@ -15,7 +15,7 @@
             <el-form-item label="群名称">
                 <el-input v-model="param.anme" prefix-icon="User" placeholder="请输入" clearable />
             </el-form-item>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" icon="Search" @click="Query">查询</el-button>
             <div style="flex: 1;"></div>
             <el-radio-group v-model="param.radio1">
                 <el-radio value="1" size="large">最近3个月</el-radio>
