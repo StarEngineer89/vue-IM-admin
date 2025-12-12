@@ -25,16 +25,22 @@
     defineExpose({ Open });
 
     function Open(data){
-        param.value = {};
         if(data){
             title.value = '编辑邀请码';
             const json = JSON.parse(JSON.stringify(data));
-            param.value.uid = json.id;
-            param.value.invite_code = json.invite_code;
-            param.value.msg = json.default_msg;
+            param.value = {
+                uid: json.id,
+                invite_code: json.invite_code || '',
+                msg: json.default_msg || ''
+            };
         }
         else{
             title.value = '新增邀请码';
+            param.value = {
+                uid: '',
+                invite_code: '',
+                msg: ''
+            };
         }
         isshow.value = true;
     }

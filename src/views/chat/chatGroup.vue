@@ -14,7 +14,7 @@
                 />
             </el-form-item>
             <el-form-item label="群名称">
-                <el-input v-model="param.anme" prefix-icon="User" placeholder="请输入" clearable />
+                <el-input v-model="param.name" prefix-icon="User" placeholder="请输入" clearable />
             </el-form-item>
             <el-button type="primary"  @click="Query">查询</el-button>
             <div style="flex: 1;"></div>
