@@ -2,9 +2,9 @@
     <div class="page-t">
         <el-scrollbar class="page-param" max-height="126px" style="margin-bottom: 5px;">
             <el-form :inline="true">
-                <el-form-item label="UID">
+                <!-- <el-form-item label="UID">
                     <el-input  v-model="param.uid" placeholder="请输入" clearable />
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="昵称">
                     <el-input  v-model="param.nickname" placeholder="请输入" clearable />
                 </el-form-item>
