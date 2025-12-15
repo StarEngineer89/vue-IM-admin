@@ -69,14 +69,31 @@
                 </div>
            </el-scrollbar>
         </div>
+        <div class="page-pagination">
+            <el-scrollbar style="white-space: nowrap;">
+                <el-pagination
+                    :current-page="param.page"
+                    :page-size="param.limit"
+                    :total="total"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :pager-count="11"
+                    :hide-on-single-page="false"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    @current-change="CurrentChange"
+                    @size-change="SizeChange"
+                    background
+                />
+            </el-scrollbar>
+        </div>
     </div>
 </template>
 
 <script setup>
     const { proxy: { axios, tips } } = getCurrentInstance();
-    const param = ref({})
+    const param = ref({page:1, limit:20})
     const chatList = ref([])
     const chatContent = ref([])
+    const total = ref(0)
 
     setTimeout(()=>{ Query() }, 1)
     //查询
@@ -84,7 +101,8 @@
         let loading = tips.loading('查询中');
         axios.post('/admin/convers/list', param.value).then( res => {
             if (res.status == 200) {
-                chatList.value = res.data;
+                chatList.value = res.data?.list || res.data || [];
+                total.value = res.data?.count || res.data?.total || (res.data?.list?.length ?? res.data?.length ?? 0);
             }
             else tips.error(res.msg)
         }).finally(()=>{ loading.close(); });
@@ -98,6 +116,17 @@
             }
             else tips.error(res.msg)
         }).finally(()=>{ loading.close(); });
+    }
+
+    //当前页数 改变
+    function CurrentChange (number){
+        param.value.page = number;
+        Query()
+    }
+    //每页大小 改变
+    function SizeChange (number){
+        param.value.limit = number;
+        Query()
     }
 </script>
 
@@ -174,5 +203,10 @@
     .chatImg{
         max-width: 260px;
         max-height: 260px;
+    }
+
+    .page-pagination{
+        padding: 10px 20px 0;
+        background-color: #fff;
     }
 </style>
