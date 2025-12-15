@@ -40,7 +40,7 @@
         <el-table :data="tableData" @selection-change="SelectionChange" border max-height="100vh - 350px">
             <el-table-column fixed type="selection" width="38" />
             <el-table-column prop="" label="序号" width="70" >
-                <template #default="scope"> {{ scope.$index + 1 }} </template>
+                <template #default="scope"> {{ (param.page - 1) * param.limit + scope.$index + 1 }} </template>
             </el-table-column>
             <el-table-column prop="id" label="UID" show-overflow-tooltip />
             <el-table-column prop="account" label="账号" show-overflow-tooltip />
