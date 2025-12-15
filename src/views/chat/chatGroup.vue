@@ -18,11 +18,11 @@
             </el-form-item>
             <el-button type="primary"  @click="Query">查询</el-button>
             <div style="flex: 1;"></div>
-            <el-radio-group v-model="param.radio1">
+            <!-- <el-radio-group v-model="param.radio1">
                 <el-radio value="1" size="large">最近3个月</el-radio>
                 <el-radio value="2" size="large">3个月前</el-radio>
                 <el-radio value="3" size="large">无效群记录</el-radio>
-            </el-radio-group>
+            </el-radio-group> -->
         </div>
         <div class="content">
            <el-scrollbar height="100%" style="width: 280px; padding: 20px; border-right: 1px solid #eee;">
@@ -130,6 +130,8 @@
         width: 100%;
         height: 100%;
         background-color: #fff;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     .page-param{
         display: flex;
